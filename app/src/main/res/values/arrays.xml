@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<string-array name="main_menu_items">
+    <item name="q0">@string/main_menu_item0</item>
+    <item name="q1">@string/main_menu_item1</item>
+    <item name="q2">@string/main_menu_item2</item>
+    <item name="q3">@string/main_menu_item3</item>
+</string-array>
+
+    <array name="main_menu_icons">
+        <item>@drawable/ic_mainmenu_income</item>
+        <item>@drawable/ic_mainmenu_income</item>
+        <item>@drawable/ic_mainmenu_income</item>
+        <item>@drawable/ic_mainmenu_income</item>
+    </array>
+
+</resources>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">WMoney2</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="main_menu_item0">Доходы</string>
+    <string name="main_menu_item1">Расходы</string>
+    <string name="main_menu_item2">Переводы</string>
+    <string name="main_menu_item3">Отчеты</string>
+    <string name="main_menu_item4">Настройки</string>
+</resources>
