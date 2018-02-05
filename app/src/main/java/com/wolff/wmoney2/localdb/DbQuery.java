@@ -12,19 +12,41 @@ import android.util.Log;
 public class DbQuery {
     private static DbQuery sDbQuery;
     private Context mContext;
+    private String mTableName;
+
+
     private SQLiteDatabase mDatabase;
 
-    private DbQuery(Context context){
+    private DbQuery(Context context,String tableName){
         mContext = context.getApplicationContext();
         mDatabase = new DbHelper(mContext).getReadableDatabase();
+        mTableName = tableName;
     }
-    public static DbQuery get(Context context) {
+    public static DbQuery get(Context context,String tableName) {
         if (sDbQuery == null) {
-            sDbQuery = new DbQuery(context);
+            sDbQuery = new DbQuery(context,tableName);
         }
         return sDbQuery;
     }
-    public DbCursorWrapper queryWCurrency(){
+    public DbCursorWrapper query(){
+        String[] columns = null;
+        String selection = null;
+        String[] selectionArgs = null;
+        String groupBy = null;
+        String having = null;
+        String orderBy = null;
+
+        Cursor cursor = mDatabase.query(mTableName,
+                columns,
+                selection,
+                selectionArgs,
+                groupBy,
+                having,
+                orderBy);
+        return new DbCursorWrapper(cursor);
+    }
+
+/*    public DbCursorWrapper queryWCurrency(){
         String[] columns = null;
         String selection = null;
         String[] selectionArgs = null;
@@ -136,22 +158,5 @@ public class DbQuery {
         return new DbCursorWrapper(cursor);
     }
 
-/*
-    public DbCursorWrapper query_testObjects(){
-        String selection = null;
-        String[] selectionArgs = null;
-        String[] columns = null;
-        String groupBy = null;
-        String having = null;
-        String orderBy = DbSchema.Table_Test.Cols.COORD + " DESC";
-        Cursor cursor = mDatabase.query(DbSchema.Table_Test.TABLE_NAME,
-                columns,
-                selection,
-                selectionArgs,
-                groupBy,
-                having,
-                orderBy);
-        return new DbCursorWrapper(cursor);
-    }
     */
 }

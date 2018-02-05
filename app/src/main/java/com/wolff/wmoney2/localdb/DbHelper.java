@@ -17,9 +17,9 @@ class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //db.execSQL(DbSchema.CREATE_TABLE_TEST);
         db.execSQL(DbSchema.CREATE_ACCOUNTS_TABLE);
-        db.execSQL(DbSchema.CREATE_CATEGORY_TABLE);
+        db.execSQL(DbSchema.CREATE_CATEGORY_DEBIT_TABLE);
+        db.execSQL(DbSchema.CREATE_CATEGORY_CREDIT_TABLE);
         db.execSQL(DbSchema.CREATE_CREDIT_TABLE);
         db.execSQL(DbSchema.CREATE_CURRENCY_TABLE);
         db.execSQL(DbSchema.CREATE_DEBIT_TABLE);
@@ -28,7 +28,5 @@ class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //db.execSQL("DROP TABLE IF EXISTS "+DbSchema.Table_Test.TABLE_NAME);
-        //db.execSQL(DbSchema.CREATE_TABLE_TEST);
     }
 }

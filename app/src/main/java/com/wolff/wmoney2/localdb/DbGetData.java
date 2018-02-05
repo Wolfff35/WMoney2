@@ -2,32 +2,33 @@ package com.wolff.wmoney2.localdb;
 
 import android.content.Context;
 
-import com.wolff.wmoney2.model.WAccount;
-import com.wolff.wmoney2.model.WCategory;
-import com.wolff.wmoney2.model.WCurrency;
-import com.wolff.wmoney2.model.WOperation;
-import com.wolff.wmoney2.model.WTransfer;
-
 import java.util.ArrayList;
 
 /**
  * Created by wolfff on 23.01.18.
  */
 
-public class DbGetData {
+public class DbGetData<T> {
     private Context mContext;
-    private static DbGetData sDbGetData;
 
-    private DbGetData(Context context){
+    public DbGetData(Context context){
         mContext = context.getApplicationContext();
     }
-    public static DbGetData get(Context context){
-        if(sDbGetData==null){
-            sDbGetData = new DbGetData(context);
+
+    public ArrayList<T> getList() {
+        DbCursorWrapper cursorWrapper = DbQuery.get(mContext, DbSchema.Table_Currency.TABLE_NAME).query();
+        ArrayList<T> list = new ArrayList<>();
+        cursorWrapper.moveToFirst();
+        while (!cursorWrapper.isAfterLast()) {
+            //currencyList.add(cursorWrapper.getWCurrency());
+            list.add((T) cursorWrapper.get());
+            cursorWrapper.moveToNext();
         }
-        return sDbGetData;
+        cursorWrapper.close();
+        return list;
     }
 
+    /*
     public ArrayList<WCurrency> getWCurrencyList(){
         DbCursorWrapper cursorWrapper = DbQuery.get(mContext).queryWCurrency();
         ArrayList<WCurrency> currencyList = new ArrayList<>();
@@ -83,19 +84,5 @@ public class DbGetData {
         cursorWrapper.close();
         return transferList;
     }
-
-    /*
-    public ArrayList<WTestObject> getTestObjectList(){
-        DbCursorWrapper cursorWrapper = DbQuery.get(mContext).query_testObjects();
-        ArrayList<WTestObject> testObjects = new ArrayList<>();
-        cursorWrapper.moveToFirst();
-        while (!cursorWrapper.isAfterLast()){
-            WTestObject testObject = cursorWrapper.getWTestObject();
-            testObjects.add(testObject);
-            cursorWrapper.moveToNext();
-        }
-        cursorWrapper.close();
-        return testObjects;
-    }
-    */
-}
+*/
+ }

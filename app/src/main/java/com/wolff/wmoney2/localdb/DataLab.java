@@ -2,9 +2,7 @@ package com.wolff.wmoney2.localdb;
 
 import android.content.Context;
 
-import com.wolff.wmoney2.model.WAccount;
-import com.wolff.wmoney2.model.WCategory;
-import com.wolff.wmoney2.model.WCurrency;
+import com.wolff.wmoney2.model.WBase;
 
 import java.util.ArrayList;
 
@@ -12,7 +10,7 @@ import java.util.ArrayList;
  * Created by wolfff on 01.02.18.
  */
 
-public class DataLab {
+public class DataLab<T extends WBase> {
     private static DataLab sDataLab;
 
     private Context mContext;
@@ -26,27 +24,10 @@ public class DataLab {
         }
         return sDataLab;
     }
-    public WCurrency fingCurrencyById(double idCurr,ArrayList<WCurrency> currencyList){
+    public T fingById(double idCurr,ArrayList<T> itemList){
 
-        for (WCurrency item:currencyList) {
+        for (T item:itemList) {
             if(item.getId()==idCurr){
-                return item;
-            }
-        }
-        return null;
-    }
-    public WAccount fingAccountById(double idAcc,ArrayList<WAccount>accountList){
-        for (WAccount item:accountList) {
-            if(item.getId()==idAcc){
-                return item;
-            }
-        }
-        return null;
-    }
-    public WCategory fingCategoryById(double idCategory, ArrayList<WCategory> categoryList){
-
-        for (WCategory item:categoryList) {
-            if(item.getId()==idCategory){
                 return item;
             }
         }

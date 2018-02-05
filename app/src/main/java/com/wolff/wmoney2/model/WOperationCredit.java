@@ -7,21 +7,12 @@ import java.util.Date;
  * Created by wolff on 01.06.2017.
  */
 
-public class WOperation extends WBase implements Serializable {
-    private static final long serialVersionUID = 1263051678907804396L;
+public class WOperationCredit extends WBase implements Serializable {
+    private static final long serialVersionUID = 1253051678907804396L;
     private WAccount mAccount;
-    private WCategory mCategory;
+    private WCategoryCredit mCategory;
     private double mSumma;
     private Date mDateOper;
-    private boolean isCredit;
-
-    public boolean isCredit() {
-        return isCredit;
-    }
-
-    public void setCredit(boolean credit) {
-        isCredit = credit;
-    }
 
     public WAccount getAccount() {
         return mAccount;
@@ -31,11 +22,11 @@ public class WOperation extends WBase implements Serializable {
         mAccount = account;
     }
 
-    public WCategory getCategory() {
+    public WCategoryCredit getCategory() {
         return mCategory;
     }
 
-    public void setCategory(WCategory category) {
+    public void setCategory(WCategoryCredit category) {
         mCategory = category;
     }
 
