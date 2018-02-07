@@ -32,7 +32,7 @@
         android:layout_weight="45"
         android:background="@android:color/background_light"
         android:focusableInTouchMode="true"
-        app:srcCompat="@drawable/ic_add_item" />
+        app:srcCompat="@drawable/ic_add_black" />
 
 
 </LinearLayout>

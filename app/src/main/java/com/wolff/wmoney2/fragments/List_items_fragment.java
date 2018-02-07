@@ -1,15 +1,15 @@
 package com.wolff.wmoney2.fragments;
 
-import android.app.ListFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 
 import com.wolff.wmoney2.localdb.DbGetData;
 import com.wolff.wmoney2.model.WBase;
+import com.wolff.wmoney2.tools.DebugTools;
+import com.wolff.wmoney2.tools.UITools;
 
 import java.util.ArrayList;
 
@@ -20,37 +20,44 @@ import java.util.ArrayList;
 public class List_items_fragment<T extends WBase> extends AList_fragment {
     private ArrayList<T> mList;
     private List_items_fragment_listener listener;
-
+    private  String mTableName;
     public interface List_items_fragment_listener{
-        void onItemClick();
+        void onItemClick(int item_position);
     }
-    public static<T extends WBase> List_items_fragment newInstance(){
+    public static<T extends WBase> List_items_fragment newInstance(String table_name){
+         Bundle args  = new Bundle();
+        args.putString("TABLE_NAME",table_name);
         List_items_fragment<T> fragment = new List_items_fragment();
+        fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //mList = DbGetData.get(getContext()).getList(T.);
+        mTableName = getArguments().getString("TABLE_NAME");
+        mList = new DbGetData<T>(getContext()).getList(mTableName);
+        DebugTools.Log("onCreate","000");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //mAccountList = DataLab.get(getContext()).getWAccountList(getContext());
+        mList = new DbGetData<T>(getContext()).getList(mTableName);
+        getActivity().setTitle(new UITools().getListTitle(mTableName));
         onActivityCreated(null);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //ListAdapter adapter = new Adapter_AccountList(getContext(),mAccountList);
-        //setListAdapter(adapter);
+        Adapter_ListItem<T> adapter = new Adapter_ListItem(getContext(),mList);
+        setListAdapter(adapter);
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            //    listener.onAccountItemClick(mAccountList.get(position));
+                listener.onItemClick(position);
             }
         });
     }

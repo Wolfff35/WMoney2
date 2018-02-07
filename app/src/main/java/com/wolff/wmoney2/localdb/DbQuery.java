@@ -12,23 +12,19 @@ import android.util.Log;
 public class DbQuery {
     private static DbQuery sDbQuery;
     private Context mContext;
-    private String mTableName;
-
-
     private SQLiteDatabase mDatabase;
 
-    private DbQuery(Context context,String tableName){
+    private DbQuery(Context context){
         mContext = context.getApplicationContext();
         mDatabase = new DbHelper(mContext).getReadableDatabase();
-        mTableName = tableName;
     }
-    public static DbQuery get(Context context,String tableName) {
+    public static DbQuery get(Context context) {
         if (sDbQuery == null) {
-            sDbQuery = new DbQuery(context,tableName);
+            sDbQuery = new DbQuery(context);
         }
         return sDbQuery;
     }
-    public DbCursorWrapper query(){
+    public DbCursorWrapper query(String table_name){
         String[] columns = null;
         String selection = null;
         String[] selectionArgs = null;
@@ -36,14 +32,14 @@ public class DbQuery {
         String having = null;
         String orderBy = null;
 
-        Cursor cursor = mDatabase.query(mTableName,
+        Cursor cursor = mDatabase.query(table_name,
                 columns,
                 selection,
                 selectionArgs,
                 groupBy,
                 having,
                 orderBy);
-        return new DbCursorWrapper(cursor);
+        return new DbCursorWrapper(cursor,mContext);
     }
 
 /*    public DbCursorWrapper queryWCurrency(){

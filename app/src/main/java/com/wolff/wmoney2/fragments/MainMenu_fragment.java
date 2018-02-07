@@ -27,6 +27,13 @@ public class MainMenu_fragment extends ListFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().setTitle("");
+
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMenuData = getResources().getStringArray(R.array.main_menu_items);

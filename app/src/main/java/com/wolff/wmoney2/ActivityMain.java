@@ -6,11 +6,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.wolff.wmoney2.fragments.List_items_fragment;
 import com.wolff.wmoney2.fragments.MainMenu_fragment;
+import com.wolff.wmoney2.localdb.DbSchema;
 import com.wolff.wmoney2.tools.DebugTools;
+import com.wolff.wmoney2.tools.Test_data;
 import com.wolff.wmoney2.tools.UITools;
 
-public class ActivityMain extends AppCompatActivity implements MainMenu_fragment.MainMenu_fragment_listener{
+public class ActivityMain extends AppCompatActivity implements MainMenu_fragment.MainMenu_fragment_listener,List_items_fragment.List_items_fragment_listener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +21,8 @@ public class ActivityMain extends AppCompatActivity implements MainMenu_fragment
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        new UITools().displayFragment(this,MainMenu_fragment.newInstance());
+        new Test_data().fillTestData(getApplicationContext());
+        new UITools().displayFragment(this,MainMenu_fragment.newInstance(),false);
 
      }
 
@@ -31,12 +35,8 @@ public class ActivityMain extends AppCompatActivity implements MainMenu_fragment
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+          int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -47,5 +47,29 @@ public class ActivityMain extends AppCompatActivity implements MainMenu_fragment
     @Override
     public void onMainMenuItemClick(int index) {
         DebugTools.Log("CLICK","index = "+index);
+        //Intent intent = null;
+        switch (index){
+            case 0:{
+                 new UITools().displayFragment(this,List_items_fragment.newInstance(DbSchema.Table_Debit.TABLE_NAME),true);
+                break;
+            }
+            case 1:{
+                new UITools().displayFragment(this,List_items_fragment.newInstance(DbSchema.Table_Credit.TABLE_NAME),true);
+                break;
+            }
+            case 2:{
+                new UITools().displayFragment(this,List_items_fragment.newInstance(DbSchema.Table_Transfer.TABLE_NAME),true);
+                break;
+            }
+            case 3:{
+                break;
+            }
+
+        }
+    }
+
+    @Override
+    public void onItemClick(int item_position) {
+        DebugTools.Log("onItemClick",""+item_position);
     }
 }

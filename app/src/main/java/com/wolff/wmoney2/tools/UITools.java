@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.wolff.wmoney2.R;
+import com.wolff.wmoney2.localdb.DbSchema;
 import com.wolff.wmoney2.tools.PreferencesTools;
 
 /**
@@ -36,14 +37,53 @@ public class UITools {
                 //.addToBackStack(fragment.getTag());
         fragmentTransaction.commit();
     }
-    public void displayFragment(FragmentActivity context, Fragment fragment) {
+    public void displayFragment(FragmentActivity context, Fragment fragment,boolean addToBackStack) {
         FragmentTransaction fragmentTransaction;
         FragmentManager fm = context.getFragmentManager();
 
         fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container_main, fragment);
+        if(addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
         //.addToBackStack(fragment.getTag());
         fragmentTransaction.commit();
+    }
+    public String getListTitle(String table_name){
+        switch (table_name){
+            case DbSchema.Table_Account.TABLE_NAME: {
+                return "Счета";
+                //break;
+            }
+            case DbSchema.Table_Category_Debit.TABLE_NAME: {
+                return "Статьи дохода";
+                //break;
+            }
+            case DbSchema.Table_Category_Credit.TABLE_NAME: {
+                return "Статьи расхода";
+                //break;
+            }
+
+            case DbSchema.Table_Currency.TABLE_NAME: {
+                return "Валюты";
+                //break;
+            }
+
+            case DbSchema.Table_Debit.TABLE_NAME: {
+                return "Доходы";
+                //break;
+            }
+            case DbSchema.Table_Credit.TABLE_NAME: {
+                return "Расходы";
+                //break;
+            }
+            case DbSchema.Table_Transfer.TABLE_NAME: {
+                return "Переводы";
+                //break;
+            }
+            default:
+                return "НЕПОНЯТНО";
+        }
     }
 /*
    // Восстанавливаем уже созданный фрагмент
