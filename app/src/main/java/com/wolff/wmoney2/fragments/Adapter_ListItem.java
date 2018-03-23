@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wolff.wmoney2.R;
 import com.wolff.wmoney2.model.WBase;
+import com.wolff.wmoney2.tools.UITools;
 
 import java.util.ArrayList;
 
@@ -49,12 +50,6 @@ public class Adapter_ListItem<T extends WBase> extends BaseAdapter {
             view=mInflater.inflate(R.layout.list_item_adapter,parent,false);
         }
         T account = getItem(position);
-        TextView tvAccountName =  view.findViewById(R.id.tvAccountName);
-        TextView tvAccountCost = view.findViewById(R.id.tvAccountCost);
-        ImageView ivAccountPict =view.findViewById(R.id.ivAccountPict);
-
-        //ivAccountPict.setImageResource(account.getIdPicture());
-        tvAccountName.setText("/- "+position+"/ = "+account.getName());
-        //tvAccountCost.setText(String.format("%.2f",account.getSumma())+" "+account.getCurrency().getName());
-        return view;
+        return new UITools().getAdapterView(view,account);
+        //return view;
     }}

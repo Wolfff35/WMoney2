@@ -48,7 +48,9 @@ public class DateFormatTools {
         }
 
         DateFormat format = new SimpleDateFormat(strFormat, Locale.ENGLISH);
-        format.setTimeZone(TimeZone.getTimeZone("GMT+02"));//TODO
+        //format.setTimeZone(TimeZone.getTimeZone("GMT+02"));//TODO
+        format.setTimeZone(TimeZone.getDefault());//TODO
+
         return format.format(locDate);
     }
     public String addZero(int num){

@@ -6,9 +6,13 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wolff.wmoney2.R;
 import com.wolff.wmoney2.localdb.DbSchema;
+import com.wolff.wmoney2.model.WBase;
 import com.wolff.wmoney2.tools.PreferencesTools;
 
 /**
@@ -27,15 +31,6 @@ public class UITools {
     public void firstRunInitialize(Context context){
         Log.e("FIRST RUN","INIT");
         new PreferencesTools().setBooleanPreference(context,PreferencesTools.PREFERENCE_IS_FIRST_RUN,false);
-    }
-    public void displayFragment4(FragmentActivity context, android.support.v4.app.Fragment fragment) {
-        android.support.v4.app.FragmentTransaction fragmentTransaction;
-        android.support.v4.app.FragmentManager fm = context.getSupportFragmentManager();
-
-        fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container_main, fragment);
-                //.addToBackStack(fragment.getTag());
-        fragmentTransaction.commit();
     }
     public void displayFragment(FragmentActivity context, Fragment fragment,boolean addToBackStack) {
         FragmentTransaction fragmentTransaction;
@@ -85,7 +80,27 @@ public class UITools {
                 return "НЕПОНЯТНО";
         }
     }
-/*
+
+    public View getAdapterView(View view, WBase item){
+        DebugTools.Log("UITools",".getAdapterView - "+item.getClass().getSimpleName());
+        View v = view;
+        switch (item.getClass().getSimpleName()){
+            case "WOperationCredit":{
+                TextView tvItemName =  v.findViewById(R.id.tvAccountName);
+                //TextView tvAccountCost = v.findViewById(R.id.tvAccountCost);
+                //ImageView ivAccountPict =v.findViewById(R.id.ivAccountPict);
+
+                //ivAccountPict.setImageResource(account.getIdPicture());
+                tvItemName.setText("/ = "+item.getName());
+                //tvAccountCost.setText(String.format("%.2f",account.getSumma())+" "+account.getCurrency().getName());
+                break;
+            }
+            default:
+                break;
+        }
+        return v;
+    }
+    /*
    // Восстанавливаем уже созданный фрагмент
     FragmentManager fm = getSupportFragmentManager();
     fragment = (MyFragment) fm.findFragmentByTag(FRAGMENT_INSTANCE_NAME);
